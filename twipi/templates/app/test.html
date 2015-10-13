@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Shop Homepage - Start Bootstrap Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/shop-homepage.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<style>
+body {
+    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+</style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Start Bootstrap</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">About</a>
+                    </li>
+                    <li>
+                        <a href="#">Services</a>
+                    </li>
+                    <li>
+                        <a href="#">Contact</a>
+                    </li>
+		{% if user.is_authenticated %}
+<li>
+                        <a href="/app/logout/">Logout</a>
+                    </li>
+{% endif %}	
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+<div class="container">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <p class="lead">Shop Name</p>
+                <div class="list-group">
+                    <a href="/app/filter/1" class="list-group-item">Last 1 Hour</a>
+                    <a href="/app/filter/24" class="list-group-item">Last 24 hours</a>
+                    <a href="/app/filter/168" class="list-group-item">Last 7 days</a>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+		Welcome @ to Twitter
+            </div>
+       </div>
+
+<div class="row">
+<div class="col-md-12">
+
+<form method='post' action='/app/submit/'>
+					{% csrf_token %}
+					<p>Enter your tweet:</p>
+						
+						<input type='text' size='140' name='tweettext'>
+						<input type='submit' value='Tweet'>
+</form>					
+
+
+
+</div>
+</div>
+
+
+<div class="row">
+<div class="col-md-12">
+<ul>
+{% for tweet in tweets %}
+<h1><li>{{tweet.text}}</li></h1>
+	<form method='post' action='/app/retweet/{{tweet.id}}/'>
+		{% csrf_token %} 
+			Retweet? <input type='submit' value='re'>
+	</form>  
+<a href="/app/reply/{{tweet.id}}"><li>View Replies</li></a>
+
+<form action="/app/replies/{{tweet.id}}/" method="POST">
+	<h3>Add Reply</h3>
+    {% csrf_token %}
+    <table>
+         <input type='text' size='30' name='reply'>
+    </table>
+    <input type="submit" name="submit" value="Submit" />
+</form>
+
+<br>
+{% endfor %}
+</ul>
+</div>
+</div>
+
+
+
+
+</body>
+</html>

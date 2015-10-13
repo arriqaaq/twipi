@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+    <head>
+         <title>Twitter</title>
+    </head>
+
+    <body>
+        <h1>Tweet</h1>
+	<li>{{tweet.text}}
+	Replies:
+	{% for reply in replies %}
+	{% endfor %}
+
+
+    </body>
+</html>
